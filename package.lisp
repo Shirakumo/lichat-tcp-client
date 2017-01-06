@@ -9,4 +9,19 @@
   (:nicknames #:org.shirakumo.lichat.tcp-client)
   (:use #:cl)
   (:export
-   #:*default-port*))
+   #:*default-port*
+   #:client
+   #:name
+   #:password
+   #:socket
+   #:hsotname
+   #:port
+   #:thread
+   #:read-message
+   #:call-with-response
+   #:with-response
+   #:open-connection
+   #:close-connection
+   #:send
+   #:handle-connection
+   #:process))
