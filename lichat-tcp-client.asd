@@ -10,7 +10,7 @@
   :license "Artistic"
   :author "Nicolas Hafner <shinmera@tymoon.eu>"
   :maintainer "Nicolas Hafner <shinmera@tymoon.eu>"
-  :description "A simple tcp client implementation for lichat"
+  :description "A simple TCP client implementation for lichat"
   :homepage "https://github.com/Shinmera/lichat"
   :serial T
   :components ((:file "package")
