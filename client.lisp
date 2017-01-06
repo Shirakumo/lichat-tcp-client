@@ -6,6 +6,8 @@
 
 (in-package #:org.shirakumo.lichat)
 
+(defvar *default-port* 1111)
+
 (defclass client ()
   ((name :initarg :name :accessor name)
    (password :initarg :password :accessor password)
