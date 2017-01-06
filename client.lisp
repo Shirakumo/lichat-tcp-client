@@ -13,12 +13,14 @@
    (password :initarg :password :accessor password)
    (socket :initarg :socket :accessor socket)
    (hostname :initarg :hostname :accessor hostname)
-   (port :initarg :port :accessor port))
+   (port :initarg :port :accessor port)
+   (thread :initarg :thread :accessor thread))
   (:default-initargs
    :name (machine-instance)
    :password NIL
    :hostname "localhost"
-   :port *default-port*))
+   :port *default-port*
+   :thread NIL))
 
 (defmethod socket-stream ((client client))
   (usocket:socket-stream (socket client)))
@@ -54,6 +56,9 @@
     (unless (typep message 'lichat-protocol:connect)
       (close-connection client)
       (error "Connection failed: ~a" message)))
+  (setf (thread client) (bt:make-thread (lambda () (unwind-protect
+                                                        (loop (handle-connection client))
+                                                     (setf (thread client) NIL)))))
   client)
 
 (defmethod close-connection ((client client))
@@ -65,3 +70,27 @@
 (defmethod send ((object lichat-protocol:wire-object) (client client))
   (lichat-protocol:to-wire object (usocket:socket-stream (socket client)))
   object)
+
+(defun handle-connection ((client client))
+  (let ((stream (usocket:socket-stream (socket client))))
+    (restart-case
+        (handler-case
+            (loop while (open-stream-p stream)
+                  for message = (read-message client)
+                  do (when message (process message)))
+          ((or usocket:ns-try-again-condition
+            usocket:timeout-error
+            usocket:shutdown-error
+            usocket:connection-reset-error
+            usocket:connection-aborted-error
+            cl:end-of-file) (err)
+            (v:warn :lichat.client "~a: Encountered fatal error: ~a" client err)))
+      (close-connection ()
+        (close-connection client)))))
+
+(defmethod process (object (client client))
+  (v:info :lichat.client "~a: received ~a" client object))
+
+(defmethod process ((update lichat-protocol:disconnect) (client client))
+  (v:info :lichat.client "~a: received disconnect, exiting." client)
+  (invoke-restart 'close-connection))
