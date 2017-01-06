@@ -71,7 +71,7 @@
   (lichat-protocol:to-wire object (usocket:socket-stream (socket client)))
   object)
 
-(defun handle-connection ((client client))
+(defmethod handle-connection ((client client))
   (let ((stream (usocket:socket-stream (socket client))))
     (restart-case
         (handler-case
