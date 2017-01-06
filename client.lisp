@@ -4,7 +4,7 @@
  Author: Nicolas Hafner <shinmera@tymoon.eu>
 |#
 
-(in-package #:org.shirakumo.lichat)
+(in-package #:org.shirakumo.lichat.tcp-client)
 
 (defvar *default-port* 1111)
 
