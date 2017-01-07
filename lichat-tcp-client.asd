@@ -14,7 +14,8 @@
   :homepage "https://github.com/Shinmera/lichat"
   :serial T
   :components ((:file "package")
-               (:file "client"))
+               (:file "client")
+               (:file "repl"))
   :depends-on (:lichat-protocol
                :usocket
                :bordeaux-threads

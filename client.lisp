@@ -65,7 +65,8 @@
       (error "Connection failed: ~a" message)))
   (setf (thread client) (bt:make-thread (lambda () (unwind-protect
                                                         (handle-connection client)
-                                                     (setf (thread client) NIL)))))
+                                                     (setf (thread client) NIL)))
+                                        :initial-bindings `((*standard-output* . ,*standard-output*))))
   client)
 
 (defmethod close-connection ((client client))
@@ -79,13 +80,18 @@
   (lichat-protocol:to-wire object (usocket:socket-stream (socket client)))
   object)
 
+(defun s (client type &rest args)
+  (send (apply #'make-instance (find-symbol (string type) :lichat-protocol)
+               :from (name client) args)
+        client))
+
 (defmethod handle-connection ((client client))
   (let ((stream (usocket:socket-stream (socket client))))
     (restart-case
         (handler-case
             (loop while (open-stream-p stream)
-                  for message = (read-message client)
-                  do (when message (process message client)))
+                  do (v:info :lichat.client "~a: Waiting for message..." client)
+                     (process (read-message client) client))
           ((or usocket:ns-try-again-condition
             usocket:timeout-error
             usocket:shutdown-error
@@ -102,63 +108,3 @@
 (defmethod process ((update lichat-protocol:disconnect) (client client))
   (v:info :lichat.client "~a: received disconnect, exiting." client)
   (invoke-restart 'close-connection))
-
-(defun s (client type &rest args)
-  (send (apply #'make-instance (find-symbol (string type) :lichat-protocol)
-               :from (name client) args)
-        client))
-
-(defun j (client channel)
-  (with-eresponse (message client)
-                  (s client 'join :channel channel)
-    (format T "! Joined ~a." channel)))
-
-(defun l (client channel)
-  (with-eresponse (message client)
-                  (s client 'leave :channel channel)
-    (format T "! Left ~a." channel)))
-
-(defun c (client channel)
-  (with-eresponse (message client)
-                  (s client 'create :channel channel)
-    (format T "! Created ~a." channel)))
-
-(defun m (client channel text)
-  (with-eresponse (message client)
-                  (s client 'message :channel channel :text text)
-    (format T "~a | ~a> ~a" channel (name client) text)))
-
-(defun k (client channel user)
-  (with-eresponse (message client)
-                  (s client 'kick  :channel channel :target user)
-    (format T "! ~a was kicked from ~a." user channel)))
-
-(defun p (client channel user)
-  (with-eresponse (message client)
-                  (s client 'pull :channel channel :target user)
-    (format T "! ~a was pulled into ~a." user channel)))
-
-(defun permissions (client channel)
-  (with-eresponse (message client)
-                  (s client 'permissions)
-    (lichat-protocol:permissions message)))
-
-(defun (setf permissions) (perms client channel)
-  (with-eresponse (message client)
-                  (s client 'permissions :permissions perms)
-    perms))
-
-(defun users (client)
-  (with-eresponse (message client)
-                  (s client 'users)
-    (lichat-protocol:users message)))
-
-(defun channels (client)
-  (with-eresponse (message client)
-                  (s client 'channels)
-    (lichat-protocol:channels message)))
-
-(defun registered-p (client user)
-  (with-response (message client)
-                 (s client 'user-info :target user)
-    (lichat-protocol:registered message)))
