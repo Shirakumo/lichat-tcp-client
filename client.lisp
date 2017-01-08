@@ -11,9 +11,9 @@
 (defclass client ()
   ((name :initarg :name :accessor name)
    (password :initarg :password :accessor password)
-   (socket :initarg :socket :accessor socket)
    (hostname :initarg :hostname :accessor hostname)
    (port :initarg :port :accessor port)
+   (socket :initarg :socket :accessor socket)
    (thread :initarg :thread :accessor thread))
   (:default-initargs
    :name (machine-instance)
@@ -104,6 +104,9 @@
 
 (defmethod process (object (client client))
   (v:info :lichat.client "~a: received ~a" client object))
+
+(defmethod process ((update lichat-protocol:ping) (client client))
+  (s client 'pong))
 
 (defmethod process ((update lichat-protocol:disconnect) (client client))
   (v:info :lichat.client "~a: received disconnect, exiting." client)
