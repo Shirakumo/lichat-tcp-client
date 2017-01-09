@@ -111,6 +111,9 @@
 (defmethod process ((update lichat-protocol:ping) (client client))
   (s client 'pong))
 
+(defmethod process ((update lichat-protocol:pull) (client client))
+  (s client 'join :channel (lichat-protocol:channel update)))
+
 (defmethod process ((update lichat-protocol:disconnect) (client client))
   (v:info :lichat.client "~a: received disconnect, exiting." client)
   (invoke-restart 'close-connection))
