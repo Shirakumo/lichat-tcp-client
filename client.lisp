@@ -23,7 +23,9 @@
    :thread NIL))
 
 (defmethod socket-stream ((client client))
-  (usocket:socket-stream (socket client)))
+  (let ((socket (socket client)))
+    (when socket
+      (usocket:socket-stream socket))))
 
 (defmethod read-message ((client client))
   (loop for message = (handler-case (lichat-protocol:from-wire (socket-stream client))
