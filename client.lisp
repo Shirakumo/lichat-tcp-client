@@ -93,7 +93,8 @@
         (handler-case
             (loop while (open-stream-p stream)
                   do (v:info :lichat.client "~a: Waiting for message..." client)
-                     (process (read-message client) client))
+                     (with-simple-restart (continue "Give up processing the update.")
+                       (process (read-message client) client)))
           ((or usocket:ns-try-again-condition
             usocket:timeout-error
             usocket:shutdown-error
