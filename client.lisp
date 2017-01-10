@@ -102,7 +102,8 @@
             usocket:shutdown-error
             usocket:connection-reset-error
             usocket:connection-aborted-error
-            cl:end-of-file) (err)
+            cl:end-of-file
+            cl:stream-error) (err)
             (v:warn :lichat.client "~a: Encountered fatal error: ~a" client err)))
       (close-connection ()
         (close-connection client)))))
