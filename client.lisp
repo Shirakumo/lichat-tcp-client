@@ -62,9 +62,11 @@
   (setf (socket client) (usocket:socket-connect (hostname client) (port client)))
   (with-response (message client)
                  (s client 'connect :password (password client))
-    (unless (typep message 'lichat-protocol:connect)
-      (close-connection client)
-      (error "Connection failed: ~a" message)))
+    (cond ((typep message 'lichat-protocol:connect)
+           (process message client))
+          (T
+           (close-connection client)
+           (error "Connection failed: ~a" message))))
   (setf (thread client) (bt:make-thread (lambda () (unwind-protect
                                                         (handle-connection client)
                                                      (setf (thread client) NIL)))
