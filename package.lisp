@@ -11,7 +11,7 @@
   (:export
    #:*default-port*
    #:client
-   #:name
+   #:username
    #:password
    #:socket
    #:hsotname

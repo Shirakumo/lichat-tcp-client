@@ -27,7 +27,7 @@
 (defmethod process ((update lichat-protocol:join) (client repl-client))
   (let ((from (lichat-protocol:from update))
         (chan (lichat-protocol:channel update)))
-    (cond ((string= from (name client))
+    (cond ((string= from (username client))
            (status "Switched channel to ~a."
                    chan)
            (setf *repl-channel* chan))
@@ -38,7 +38,7 @@
 (defmethod process ((update lichat-protocol:leave) (client repl-client))
   (let ((from (lichat-protocol:from update))
         (chan (lichat-protocol:channel update)))
-    (cond ((string= from (name client))
+    (cond ((string= from (username client))
            (status "Left channel ~a."
                    chan)
            (setf *repl-channel* NIL))

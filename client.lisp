@@ -9,14 +9,14 @@
 (defvar *default-port* 1111)
 
 (defclass client ()
-  ((name :initarg :name :accessor name)
+  ((username :initarg :username :accessor username)
    (password :initarg :password :accessor password)
    (hostname :initarg :hostname :accessor hostname)
    (port :initarg :port :accessor port)
    (socket :initarg :socket :accessor socket)
    (thread :initarg :thread :accessor thread))
   (:default-initargs
-   :name (machine-instance)
+   :username (machine-instance)
    :password NIL
    :hostname "localhost"
    :port *default-port*
@@ -86,7 +86,7 @@
 
 (defun s (client type &rest args)
   (send (apply #'make-instance (find-symbol (string type) :lichat-protocol)
-               :from (name client) args)
+               :from (username client) args)
         client))
 
 (defmethod handle-connection ((client client))
