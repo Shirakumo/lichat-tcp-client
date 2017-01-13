@@ -30,7 +30,7 @@
 (defmethod read-message ((client client))
   (loop for message = (handler-case (lichat-protocol:from-wire (socket-stream client))
                         (lichat-protocol:wire-condition (err)
-                          (v:info :lichat.client "~a: error on wire: ~a" client err)))
+                          (v:warn :lichat.client "~a: error on wire: ~a" client err)))
         do (when message (return message))))
 
 (defmethod call-with-response (function client init)
@@ -94,7 +94,7 @@
     (restart-case
         (handler-case
             (loop while (open-stream-p stream)
-                  do (v:info :lichat.client "~a: Waiting for message..." client)
+                  do (v:trace :lichat.client "~a: Waiting for message..." client)
                      (with-simple-restart (continue "Give up processing the update.")
                        (process (read-message client) client)))
           ((or usocket:ns-try-again-condition
