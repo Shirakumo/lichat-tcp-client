@@ -104,9 +104,13 @@
             usocket:connection-aborted-error
             cl:end-of-file
             cl:stream-error) (err)
-            (v:warn :lichat.client "~a: Encountered fatal error: ~a" client err)))
+            (v:warn :lichat.client "~a: Encountered fatal error: ~a" client err)
+            (handle-fatal-error client)))
       (close-connection ()
         (close-connection client)))))
+
+(defmethod handle-fatal-error ((client client))
+  (invoke-restart 'close-connection))
 
 (defmethod process (object (client client))
   (v:info :lichat.client "~a: received ~a" client object))

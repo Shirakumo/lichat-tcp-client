@@ -22,6 +22,7 @@
    #:with-response
    #:open-connection
    #:close-connection
+   #:handle-fatal-error
    #:send
    #:handle-connection
    #:process))
