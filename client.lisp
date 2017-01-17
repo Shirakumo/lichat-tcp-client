@@ -89,6 +89,16 @@
                :from (username client) args)
         client))
 
+(define-compiler-macro s (&whole whole &environment env client type &rest args)
+  (if (constantp type env)
+      (let ((clientg "CLIENT"))
+        `(let ((,clientg ,client))
+           (send (make-instance ,(find-symbol (string type) :lichat-protocol)
+                                :from (username ,clientg)
+                                ,@args)
+                 ,clientg)))
+      whole))
+
 (defmethod handle-connection ((client client))
   (let ((stream (usocket:socket-stream (socket client))))
     (restart-case
