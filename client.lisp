@@ -91,9 +91,9 @@
 
 (define-compiler-macro s (&whole whole &environment env client type &rest args)
   (if (constantp type env)
-      (let ((clientg "CLIENT"))
+      (let ((clientg (gensym "CLIENT")))
         `(let ((,clientg ,client))
-           (send (make-instance ,(find-symbol (string type) :lichat-protocol)
+           (send (make-instance (load-time-value (find-symbol (string ,type) :lichat-protocol))
                                 :from (username ,clientg)
                                 ,@args)
                  ,clientg)))
