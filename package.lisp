@@ -24,5 +24,6 @@
    #:close-connection
    #:handle-fatal-error
    #:send
+   #:s
    #:handle-connection
    #:process))

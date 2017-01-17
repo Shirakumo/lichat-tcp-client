@@ -96,7 +96,14 @@ See CLIENT</pre> </article> </li><li> <a name="LICHAT-TCP-CLIENT:THREAD"> </a> <
 See CLIENT</pre> </article> </li><li> <a name="LICHAT-TCP-CLIENT:USERNAME"> </a> <article> <header class="accessor"> <span class="type">accessor</span>  <code>(</code><h4 class="name"><code><a href="#LICHAT-TCP-CLIENT:USERNAME">USERNAME</a></code></h4> <code class="qualifiers"></code> <code class="arguments">OBJECT</code><code>)</code>  </header> <pre class="docstring">Accessor to the username of the client.
 
 See CLIENT
-See LICHAT-PROTOCOL:USERNAME</pre> </article> </li><li> <a name="LICHAT-TCP-CLIENT:CALL-WITH-RESPONSE"> </a> <article> <header class="generic"> <span class="type">generic</span>  <code>(</code><h4 class="name"><code><a href="#LICHAT-TCP-CLIENT:CALL-WITH-RESPONSE">CALL-WITH-RESPONSE</a></code></h4> <code class="qualifiers"></code> <code class="arguments">FUNCTION CLIENT INIT</code><code>)</code>  </header> <pre class="docstring">Calls the function once a suitable response update has appeared on the client's stream.
+See LICHAT-PROTOCOL:USERNAME</pre> </article> </li><li> <a name="LICHAT-TCP-CLIENT:S"> </a> <article> <header class="function"> <span class="type">function</span>  <code>(</code><h4 class="name"><code><a href="#LICHAT-TCP-CLIENT:S">S</a></code></h4> <code class="qualifiers"></code> <code class="arguments">CLIENT TYPE &amp;REST ARGS</code><code>)</code>  </header> <pre class="docstring">Shorthand to construct an update to the server.
+
+TYPE is coerced to a symbol from the LICHAT-PROTOCOL package.
+It is then used together with the initargs to create an update
+instance. A :FROM initarg using the client's USERNAME is
+automatically added.
+
+See SEND</pre> </article> </li><li> <a name="LICHAT-TCP-CLIENT:CALL-WITH-RESPONSE"> </a> <article> <header class="generic"> <span class="type">generic</span>  <code>(</code><h4 class="name"><code><a href="#LICHAT-TCP-CLIENT:CALL-WITH-RESPONSE">CALL-WITH-RESPONSE</a></code></h4> <code class="qualifiers"></code> <code class="arguments">FUNCTION CLIENT INIT</code><code>)</code>  </header> <pre class="docstring">Calls the function once a suitable response update has appeared on the client's stream.
 
 A suitable response is either an UPDATE with the same ID
 as the update returned by INIT, or an UPDATE-FAILURE with
