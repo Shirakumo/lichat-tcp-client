@@ -15,7 +15,7 @@
   :serial T
   :components ((:file "package")
                (:file "client")
-               (:file "repl"))
+               (:file "documentation"))
   :depends-on (:lichat-protocol
                :usocket
                :bordeaux-threads
