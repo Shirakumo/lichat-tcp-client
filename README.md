@@ -49,6 +49,6 @@ See the [Lichat protocol](https://shirakumo.org/projects/lichat-protocol) for mo
 
 ## Also See
 
-* [lichat-protocol](https://shirakumo.org/projects/lichat-protocol) The Lichat protocol specification.
-* [lichat-serverlib](https://shirakumo.org/projects/lichat-serverlib) An agnostic implementation of the server-side protocol.
-* [lichat-tcp-server](https://shirakumo.org/projects/lichat-tcp-server) A basic, threaded, TCP-based implementation of a Lichat server.
+* [lichat-protocol](https://shirakumo.github.io/lichat-protocol) The Lichat protocol specification.
+* [lichat-serverlib](https://shirakumo.github.io/lichat-serverlib) An agnostic implementation of the server-side protocol.
+* [lichat-tcp-server](https://shirakumo.github.io/lichat-tcp-server) A basic, threaded, TCP-based implementation of a Lichat server.
