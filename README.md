@@ -52,3 +52,4 @@ See the [Lichat protocol](https://shirakumo.org/projects/lichat-protocol) for mo
 * [lichat-protocol](https://shirakumo.github.io/lichat-protocol) The Lichat protocol specification.
 * [lichat-serverlib](https://shirakumo.github.io/lichat-serverlib) An agnostic implementation of the server-side protocol.
 * [lichat-tcp-server](https://shirakumo.github.io/lichat-tcp-server) A basic, threaded, TCP-based implementation of a Lichat server.
+* [LionChat](https://github.com/Shirakumo/lionchat) A Qt GUI client for a TCP server.
