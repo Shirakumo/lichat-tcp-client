@@ -61,7 +61,8 @@
 (defmethod open-connection ((client client))
   (setf (socket client) (usocket:socket-connect (hostname client) (port client)))
   (with-response (message client)
-                 (s client 'connect :password (unless (equal "" (password client)) (password client)))
+      (s client 'connect :password (unless (equal "" (password client)) (password client))
+                         :extensions '("shirakumo-backfill" "shirakumo-data"))
     (cond ((typep message 'lichat-protocol:connect)
            (process message client))
           (T
