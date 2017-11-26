@@ -1,4 +1,4 @@
-## About Lichat-TCP-Server
+## About Lichat-TCP-Client
 This is a simple, threaded, TCP-based client for the [Lichat protocol](https://shirakumo.org/projects/lichat-protocol).
 
 ## How To
