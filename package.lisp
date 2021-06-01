@@ -14,7 +14,7 @@
    #:username
    #:password
    #:socket
-   #:hsotname
+   #:hostname
    #:port
    #:thread
    #:read-message
