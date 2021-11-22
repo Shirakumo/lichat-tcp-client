@@ -28,7 +28,7 @@
       (usocket:socket-stream socket))))
 
 (defmethod read-message ((client client))
-  (loop for message = (handler-case (lichat-protocol:from-wire (socket-stream client))
+  (loop for message = (handler-case (lichat-protocol:from-wire* (socket-stream client))
                         (lichat-protocol:wire-condition (err)
                           (v:warn :lichat.client "~a: error on wire: ~a" client err)))
         do (when message (return message))))
