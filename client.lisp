@@ -81,7 +81,7 @@
   (setf (socket client) NIL)
   client)
 
-(defmethod send ((object lichat-protocol:wire-object) (client client))
+(defmethod send ((object lichat-protocol:object) (client client))
   (lichat-protocol:to-wire object (usocket:socket-stream (socket client)))
   object)
 
