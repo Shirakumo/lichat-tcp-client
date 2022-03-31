@@ -47,6 +47,9 @@ If you would like to respond to updates that the server sends back, you can defi
 
 See the [Lichat protocol](https://shirakumo.org/projects/lichat-protocol) for more information on the available updates, their arguments, and their behaviour.
 
+## Mini Client
+You can also try a minimal sample client by calling ``mini-client``. The client is meant to illustrate simple use of the library, so make sure to check out its source file, ``mini.lisp``.
+
 ## Also See
 
 * [lichat-protocol](https://shirakumo.github.io/lichat-protocol) The Lichat protocol specification.

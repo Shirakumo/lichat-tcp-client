@@ -27,4 +27,5 @@
    #:send
    #:s
    #:handle-connection
-   #:process))
+   #:process
+   #:mini-client))
