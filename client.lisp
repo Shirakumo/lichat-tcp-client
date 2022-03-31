@@ -61,8 +61,10 @@
 (defmethod open-connection ((client client))
   (setf (socket client) (usocket:socket-connect (hostname client) (port client)))
   (with-response (message client)
-      (s client 'connect :password (unless (equal "" (password client)) (password client))
-                         :extensions '("shirakumo-backfill" "shirakumo-data"))
+                 (s client 'connect
+                    :version "2.0"
+                    :password (unless (equal "" (password client)) (password client))
+                    :extensions '("shirakumo-backfill" "shirakumo-data"))
     (cond ((typep message 'lichat-protocol:connect)
            (process message client))
           (T
@@ -81,13 +83,20 @@
   (setf (socket client) NIL)
   client)
 
+(defmethod connection-open-p ((client client))
+  (let ((stream (socket-stream client)))
+    (and stream (open-stream-p stream))))
+
 (defmethod send ((object lichat-protocol:object) (client client))
   (lichat-protocol:to-wire object (usocket:socket-stream (socket client)))
   object)
 
 (defun s (client type &rest args)
   (send (apply #'make-instance (find-symbol (string type) :lichat-protocol)
-               :from (username client) args)
+               :from (username client)
+               :id (lichat-protocol:next-id)
+               :clock (get-universal-time)
+               args)
         client))
 
 (define-compiler-macro s (&whole whole &environment env client type &rest args)
@@ -96,6 +105,8 @@
         `(let ((,clientg ,client))
            (send (make-instance (load-time-value (find-symbol (string ,type) :lichat-protocol))
                                 :from (username ,clientg)
+                                :id (lichat-protocol:next-id)
+                                :clock (get-universal-time)
                                 ,@args)
                  ,clientg)))
       whole))
@@ -128,6 +139,9 @@
 
 (defmethod process ((update lichat-protocol:ping) (client client))
   (s client 'pong))
+
+(defmethod process ((update lichat-protocol:connect) (client client))
+  (setf (username client) (lichat-protocol:from update)))
 
 (defmethod process ((update lichat-protocol:disconnect) (client client))
   (v:info :lichat.client "~a: received disconnect, exiting." client)
