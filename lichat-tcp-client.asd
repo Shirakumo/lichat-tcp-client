@@ -16,6 +16,7 @@
   :serial T
   :components ((:file "package")
                (:file "client")
+               (:file "mini")
                (:file "documentation"))
   :depends-on (:lichat-protocol
                :usocket
