@@ -7,6 +7,7 @@
 (in-package #:cl-user)
 (defpackage #:lichat-tcp-client
   (:nicknames #:org.shirakumo.lichat.tcp-client)
+  (:local-nicknames (#:v #:org.shirakumo.verbose))
   (:use #:cl)
   (:export
    #:*default-port*
