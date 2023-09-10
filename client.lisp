@@ -14,6 +14,7 @@
    :password NIL
    :hostname "localhost"
    :port *default-port*
+   :socket NIL
    :thread NIL))
 
 (defmethod socket-stream ((client client))
