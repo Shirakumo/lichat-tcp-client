@@ -65,10 +65,11 @@
           (T
            (close-connection client)
            (error "Connection failed: ~a" message))))
-  (setf (thread client) (bt:make-thread (lambda () (unwind-protect
-                                                        (handle-connection client)
-                                                     (setf (thread client) NIL)))
-                                        :initial-bindings `((*standard-output* . ,*standard-output*))))
+  (unless (thread client)
+    (setf (thread client) (bt:make-thread (lambda () (unwind-protect
+                                                          (handle-connection client)
+                                                       (setf (thread client) NIL)))
+                                          :initial-bindings `((*standard-output* . ,*standard-output*)))))
   client)
 
 (defmethod close-connection ((client client))
@@ -76,6 +77,7 @@
   (ignore-errors (s client 'disconnect))
   (ignore-errors (usocket:socket-close (socket client)))
   (setf (socket client) NIL)
+  (setf (thread client) NIL)
   client)
 
 (defmethod connection-open-p ((client client))
