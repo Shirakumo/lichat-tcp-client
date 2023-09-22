@@ -96,6 +96,16 @@
                args)
         client))
 
+(defun s-data (client channel file)
+  (let ((data (with-open-file (stream file :element-type '(unsigned-byte 8))
+                (let ((arr (make-array (file-length stream) :element-type '(unsigned-byte 8))))
+                  (read-sequence arr stream)))))
+    (s client 'data
+       :channel channel
+       :content-type (trivial-mimes:mime file)
+       :filename (file-namestring file)
+       :payload (cl-base64:usb8-array-to-base64-string data))))
+
 (define-compiler-macro s (&whole whole &environment env client type &rest args)
   (if (constantp type env)
       (let ((clientg (gensym "CLIENT")))

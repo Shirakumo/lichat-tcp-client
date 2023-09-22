@@ -21,6 +21,7 @@
    #:handle-fatal-error
    #:send
    #:s
+   #:s-data
    #:handle-connection
    #:process
    #:mini-client))

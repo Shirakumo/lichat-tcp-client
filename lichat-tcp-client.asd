@@ -16,4 +16,6 @@
                :usocket
                :bordeaux-threads
                :documentation-utils
-               :verbose))
+               :verbose
+               :cl-base64
+               :trivial-mimes))
