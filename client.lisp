@@ -77,7 +77,8 @@
   (ignore-errors (s client 'disconnect))
   (ignore-errors (usocket:socket-close (socket client)))
   (setf (socket client) NIL)
-  (setf (thread client) NIL)
+  (unless (eql :local (thread client))
+    (setf (thread client) NIL))
   client)
 
 (defmethod connection-open-p ((client client))
