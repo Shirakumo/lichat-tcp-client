@@ -100,7 +100,8 @@
 (defun s-data (client channel file)
   (let ((data (with-open-file (stream file :element-type '(unsigned-byte 8))
                 (let ((arr (make-array (file-length stream) :element-type '(unsigned-byte 8))))
-                  (read-sequence arr stream)))))
+                  (read-sequence arr stream)
+                  arr))))
     (s client 'data
        :channel channel
        :content-type (trivial-mimes:mime file)
