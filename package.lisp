@@ -12,6 +12,7 @@
    #:hostname
    #:port
    #:thread
+   #:url
    #:read-message
    #:call-with-response
    #:with-response

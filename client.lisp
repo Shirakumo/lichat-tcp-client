@@ -17,6 +17,11 @@
    :socket NIL
    :thread NIL))
 
+(defmethod url ((client client))
+  (format NIL "lichat://~a@~a~@[:~a~]/"
+          (username client) (hostname client)
+          (unless (= *default-port* (port client)) (port client))))
+
 (defmethod socket-stream ((client client))
   (let ((socket (socket client)))
     (when socket
