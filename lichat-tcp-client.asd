@@ -4,9 +4,9 @@
   :author "Yukari Hafner <shinmera@tymoon.eu>"
   :maintainer "Yukari Hafner <shinmera@tymoon.eu>"
   :description "A simple TCP client implementation for lichat"
-  :homepage "https://Shirakumo.github.io/lichat-tcp-client/"
-  :bug-tracker "https://github.com/Shirakumo/lichat-tcp-client/issues"
-  :source-control (:git "https://github.com/Shirakumo/lichat-tcp-client.git")
+  :homepage "https://shirakumo.org/docs/lichat-tcp-client/"
+  :bug-tracker "https://shirakumo.org/project/lichat-tcp-client/issues"
+  :source-control (:git "https://shirakumo.org/project/lichat-tcp-client.git")
   :serial T
   :components ((:file "package")
                (:file "client")

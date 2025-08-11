@@ -21,7 +21,7 @@ Once a client exists, it can be started to attempt a connection to the server.
 (lichat-tcp-client:open-connection *client*)
 ```
 
-The client logs information via [Verbose](http://shinmera.github.io/verbose/). If you set the REPL level to `:trace` you should see a bunch of status messages being printed every now and again.
+The client logs information via [Verbose](http://shinmera.com/docs/verbose/). If you set the REPL level to `:trace` you should see a bunch of status messages being printed every now and again.
 
 Once you're done with the client, you can shut it down again.
 
@@ -52,7 +52,7 @@ You can also try a minimal sample client by calling ``mini-client``. The client 
 
 ## Also See
 
-* [lichat-protocol](https://shirakumo.github.io/lichat-protocol) The Lichat protocol specification.
-* [lichat-serverlib](https://shirakumo.github.io/lichat-serverlib) An agnostic implementation of the server-side protocol.
-* [lichat-tcp-server](https://shirakumo.github.io/lichat-tcp-server) A basic, threaded, TCP-based implementation of a Lichat server.
-* [LionChat](https://github.com/Shirakumo/lionchat) A Qt GUI client for a TCP server.
+* [lichat-protocol](https://shirakumo.org/docs/lichat-protocol) The Lichat protocol specification.
+* [lichat-serverlib](https://shirakumo.org/docs/lichat-serverlib) An agnostic implementation of the server-side protocol.
+* [lichat-tcp-server](https://shirakumo.org/docs/lichat-tcp-server) A basic, threaded, TCP-based implementation of a Lichat server.
+* [LionChat](https://shirakumo.org/project/lionchat) A Qt GUI client for a TCP server.
